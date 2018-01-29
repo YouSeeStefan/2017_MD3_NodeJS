@@ -3,6 +3,13 @@
  */
 var config = require('../config/config');
 
+const meetings = [
+    {title:'test', time:'11:30', date:'30-3-2017'},
+    {title:'test', time:'11:30', date:'30-3-2017'},
+    {title:'test', time:'11:30', date:'30-3-2017'},
+    {title:'test', time:'11:30', date:'30-3-2017'}
+];
+
 /**
  * Create JSON response with the found user (req.user)
  */
@@ -10,18 +17,18 @@ exports.read = function(req, res) {
     res.json(req.user);
 };
 
+var users = [
+    {name: "Beren"},
+    {name: "Hugo"},
+    {name: "Ingrid"}
+];
+
 /**
  * Create JSON response with all users
  */
 exports.list = function(req, res) {
 
     console.log("voor nu geven we altijd dezelfde lijst terug met users");
-
-    var users = [
-        {name: "Beren"},
-        {name: "Hugo"},
-        {name: "Ingrid"}
-    ];
 
     res.json(users);
 };
@@ -40,12 +47,24 @@ exports.getUserByID = function(req, res, next, userID) {
     console.log("je zoekt de user met id: " + userID);
 
     console.log("voor nu geef ik je een standaard object terug");
-    req.user = {
-        name: "Berend",
-        age: 33
-    };
+    req.user = users[userID]
 
     /** de volgende Middleware/functie mag aan de slag */
     next();
+
+};
+
+exports.meetings = function(req, res) {
+
+    console.log('jep');
+    res.json(meetings);
+
+};
+
+exports.createMeeting = function(req, res) {
+
+    console.log(req.body);
+    res.json(meetings);
+    meetings.push(req.body);
 
 };
